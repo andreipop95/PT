@@ -112,6 +112,17 @@ public class Functions {
 			return 0;
 	}
 	
+	private static boolean remainderGreater(Polynomial pRem, Polynomial p) {
+		
+		if(pRem.getTerms().size() == 0)
+			return false;
+		
+		if(pRem.getTerms().get(0).getCoeff() > p.getTerms().get(0).getCoeff())
+			return true;
+		return false;
+		
+	}
+	
 	private static Polynomial divide(Polynomial p1, Polynomial p2, Polynomial pr) {
 		
 		Polynomial tempPol = new Polynomial();
@@ -147,6 +158,8 @@ public class Functions {
 		pRem = divide(p1, p2, pRes);
 		
 		while(polynomialDegree(pRem) >= polynomialDegree(p2)) {
+				if(polynomialDegree(pRem) == 0 && !remainderGreater(pRem, p2)) 
+					break;
 			pRem = divide(pRem, p2, pRes);
 		}
 		

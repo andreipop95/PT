@@ -1,0 +1,4 @@
+The name of the customer: Mihai
+Skirt price: 20 nr items:  10
+The subtotal is: 200
+Thank you for your order

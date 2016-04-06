@@ -1,0 +1,4 @@
+The name of the customer: Mihai
+Running Shoes price: 40 nr items:  2
+The subtotal is: 80
+Thank you for your order

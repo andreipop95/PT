@@ -1,17 +1,18 @@
 package polynomial;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.List;
 import java.util.ListIterator;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,6 +26,7 @@ public class Calculator extends JFrame implements ActionListener{
 	private JLabel label1, label2, label3;
 	private JButton add, sub, mul, div, der, intg;
 	private Polynomial pol1, pol2, polR;
+	int countCharacters1 = 0, countCharacters2 = 0;
 	
 	public Calculator() {
 		
@@ -54,6 +56,71 @@ public class Calculator extends JFrame implements ActionListener{
 		p1 = new JTextArea(2, 20);
 		p2 = new JTextArea(2, 20);
 		pr = new JTextArea(2, 20);
+		
+		p2.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE)
+					countCharacters2 -= 1;
+				else {
+					
+					if(countCharacters2 > 20) {
+						JOptionPane.showMessageDialog(null, "TOO MANY");
+					}
+					else {
+						countCharacters2 += 1;
+					}
+				}
+				
+			}
+		});
+		
+		
+		
+		p1.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE)
+					countCharacters1 -= 1;
+				else {
+					
+					if(countCharacters1 > 20) {
+						JOptionPane.showMessageDialog(null, "TOO MANY");
+					}
+					else {
+						countCharacters1 += 1;
+					}
+				}
+				
+			}
+		});
+		
 		pr.setEditable(false);
 		line1 = new JPanel();
 		line2 = new JPanel();
@@ -71,6 +138,8 @@ public class Calculator extends JFrame implements ActionListener{
 		fieldsPanel.add(line1);
 		fieldsPanel.add(line2);
 		fieldsPanel.add(line3);
+		
+		p1.setSize(new Dimension(2, 10));
 		
 		mainPanel.add(fieldsPanel, BorderLayout.NORTH);
 	}
@@ -188,6 +257,10 @@ public class Calculator extends JFrame implements ActionListener{
 		
 		ListIterator<Term> it = resTerms.listIterator(resTerms.size());
 		
+		if(!it.hasPrevious()) {
+			solution.append("0");
+		}
+		
 		while(it.hasPrevious()) {
 			Term t = it.previous();
 			//if(((t.coeff instanceof Integer) && (Integer)t.coeff!=0) || (t.coeff instanceof Double && (Double)t.coeff != 0.0)) {
@@ -246,12 +319,22 @@ public class Calculator extends JFrame implements ActionListener{
 			}
 		}
 		else if(e.getSource() == der) {
-			polR = Functions.der(pol1);
+			if(p1.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "Please enter a polynomial into the first text field");
+			}
+			else {
+ 			polR = Functions.der(pol1);
 			showResult(polR);
+			}
 		}
-		else if(e.getSource() == intg) {
-			polR = Functions.intg(pol1);
-			showResult(polR);
+		else {
+			if(p1.getText().equals("")) {
+				JOptionPane.showMessageDialog(null, "Please eneter a plynomial into the first text field");
+			}
+			else {
+				polR = Functions.intg(pol1);
+				showResult(polR);
+			}
 		}
 		
 	}
